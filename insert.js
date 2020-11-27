@@ -1,7 +1,8 @@
 const fs = require("fs");
 const csv = require("csv-parser");
 const mongoose = require("mongoose");
-const mongoURI = require("./config/constants").mongoURI;
+require("dotenv").config();
+const MONGODB_URI = process.env.MONGODB_URI;
 
 const { Schema } = mongoose;
 const millionRowsSchema = new Schema(
@@ -16,16 +17,13 @@ const millionRowsSchema = new Schema(
 
 mongoose.Promise = global.Promise;
 // mongoose.set("debug", true);
-mongoose.connect(
-    "mongodb+srv://huanglipang:huanglipang@cluster0.3jp43.mongodb.net/million-rows?retryWrites=true&w=majority",
-    {
-        keepAlive: true,
-        // reconnectTries: Number.MAX_VALUE,
-        // useMongoClient: true,
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-    }
-);
+mongoose.connect(MONGODB_URI, {
+    keepAlive: true,
+    // reconnectTries: Number.MAX_VALUE,
+    // useMongoClient: true,
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+});
 
 mongoose.model("million-rows", millionRowsSchema);
 
