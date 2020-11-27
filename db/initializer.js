@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-const mongoURI = require("../config/constants").mongoURI;
+require("dotenv").config();
+const MONGODB_URI = process.env.MONGODB_URI;
+const COLLECTION = process.env.COLLECTION;
 
 const { Schema } = mongoose;
 const millionRowsSchema = new Schema(
@@ -8,18 +10,18 @@ const millionRowsSchema = new Schema(
         definition: String,
     },
     {
-        collection: "million-rows",
+        collection: COLLECTION,
     }
 );
 
 exports.initializer = function () {
     mongoose.Promise = global.Promise;
     mongoose.set("debug", true);
-    mongoose.connect(mongoURI, {
+    mongoose.connect(MONGODB_URI, {
         keepAlive: true,
-        reconnectTries: Number.MAX_VALUE,
-        useMongoClient: true,
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
     });
 
-    mongoose.model("million-rows", millionRowsSchema);
+    mongoose.model(COLLECTION, millionRowsSchema);
 };

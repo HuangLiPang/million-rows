@@ -16,11 +16,16 @@ const millionRowsSchema = new Schema(
 
 mongoose.Promise = global.Promise;
 // mongoose.set("debug", true);
-mongoose.connect(mongoURI, {
-    keepAlive: true,
-    reconnectTries: Number.MAX_VALUE,
-    useMongoClient: true,
-});
+mongoose.connect(
+    "mongodb+srv://huanglipang:huanglipang@cluster0.3jp43.mongodb.net/million-rows?retryWrites=true&w=majority",
+    {
+        keepAlive: true,
+        // reconnectTries: Number.MAX_VALUE,
+        // useMongoClient: true,
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+    }
+);
 
 mongoose.model("million-rows", millionRowsSchema);
 
@@ -36,10 +41,11 @@ const MillionRows = mongoose.model("million-rows");
 //     const item = new MillionRows(dic);
 //     item.save();
 // }
-
+let i = 0;
+let data = [];
 fs.createReadStream("./data/urbandict-word-defs.csv")
     .pipe(csv())
-    .on("data", (row) => {
+    .on("data", async (row) => {
         let dic;
         if (row["word"] && row["definition"]) {
             dic = {
@@ -53,12 +59,20 @@ fs.createReadStream("./data/urbandict-word-defs.csv")
             };
         }
         try {
-            const item = new MillionRows(dic);
-            item.save();
+            data.push(dic);
         } catch (err) {
             console.error(err);
         }
     })
     .on("end", () => {
+        MillionRows.collection.insertMany(data, onInsert);
         console.log("CSV file successfully processed");
     });
+
+function onInsert(err, docs) {
+    if (err) {
+        // TODO: handle error
+    } else {
+        console.info("%d potatoes were successfully stored.", docs.length);
+    }
+}

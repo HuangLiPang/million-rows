@@ -1,18 +1,22 @@
 {
     "name": "million-rows",
     "version": "1.0.0",
-    "description": "",
+    "description": "Query million rows in few milliseconds",
+    "engines": {
+        "node": "12.x"
+    },
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
-        "server": "nodemon index.js --ignore tests"
+        "heroku-postbuild": "cd client && npm install && npm run build"
     },
-    "author": "",
+    "author": "Li-Pang Huang",
     "license": "ISC",
     "dependencies": {
         "body-parser": "^1.17.2",
         "cors": "^2.8.5",
         "express": "^4.15.3",
-        "mongoose": "^4.11.1"
+        "dotenv": "^8.2.0",
+        "mongoose": "5.10.11"
     }
 }
