@@ -19,27 +19,36 @@ class App extends Component {
             <div>
                 <h3>Search Million Rows</h3>
                 <div id="description">
-                    <span>
-                        This is a demo for searching strings from 2 million rows
-                        in just few milliseconds. The data source is from{" "}
-                    </span>
-                    <a
-                        href="https://www.kaggle.com/therohk/urban-dictionary-words-dataset/version/1"
-                        target="_blank"
-                    >
-                        urban-dictionary-words-dataset
-                    </a>
-                    <span> and the database is hosted on </span>
-                    <a href="https://www.mongodb.com/" target="_blank">
-                        Mongodb Atlas
-                    </a>
-                    .<span> For source code, please check this </span>
-                    <a
-                        href="https://github.com/HuangLiPang/million-rows"
-                        target="_blank"
-                    >
-                        repository
-                    </a>
+                    <div>
+                        <div>
+                            This is a demo for searching words from 2+ million
+                            rows in database in just few milliseconds.
+                        </div>
+                        <div>
+                            The data source is from{" "}
+                            <a
+                                href="https://www.kaggle.com/therohk/urban-dictionary-words-dataset/version/1"
+                                target="_blank"
+                            >
+                                urban-dictionary-words-dataset
+                            </a>{" "}
+                            and the database is hosted on{" "}
+                            <a href="https://www.mongodb.com/" target="_blank">
+                                Mongodb Atlas
+                            </a>
+                            .
+                        </div>
+                    </div>
+                    <div>
+                        For source code, please check this{" "}
+                        <a
+                            href="https://github.com/HuangLiPang/million-rows"
+                            target="_blank"
+                        >
+                            repository
+                        </a>
+                        .
+                    </div>
                 </div>
                 <SearchInput
                     className="search-input"
